@@ -17,9 +17,11 @@ class iphone {
 			setOptionDefault('iphone_height', '300');
 			setOptionDefault('iphone_cropw', '300');
 			setOptionDefault('iphone_croph', '300');
+			if (class_exists('cacheManager')) {
 			cacheManager::deleteThemeCacheSizes('iphone');
-			// cacheManager::addThemeCacheSize('iphone', NULL, getOption('iphone_width'), getOption('iphone_height'), getOption('iphone_cropw'), getOption('iphone_croph'), NULL, NULL, true, NULL, NULL, NULL);
-			cacheManager::addThemeCacheSize('iphone', getOption('iphone_width'), NULL, NULL, getOption('iphone_cropw'), getOption('iphone_croph'), NULL, NULL, true, NULL, NULL, NULL);
+				// cacheManager::addThemeCacheSize('iphone', NULL, getOption('iphone_width'), getOption('iphone_height'), getOption('iphone_cropw'), getOption('iphone_croph'), NULL, NULL, true, NULL, NULL, NULL);
+				cacheManager::addThemeCacheSize('iphone', getOption('iphone_width'), NULL, NULL, getOption('iphone_cropw'), getOption('iphone_croph'), NULL, NULL, true, NULL, NULL, NULL);
+			}
 	}
 
 	function getOptionsSupported() {

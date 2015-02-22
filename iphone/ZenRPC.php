@@ -418,7 +418,10 @@ function getAlbumList( $args )
 				'albumpassword' => readZenPubData( $album->getID(), 'albumpassword' ),
 				'show' => $album->getShow(),
 				'commentson' => $album->getCommentsAllowed(),
-				'thumbnail' =>$album->getAlbumThumbImage()->getFullImageURL()
+				// added by monta
+				'thumbnail' => $album->getAlbumThumbImage()->getFullImageURL(),
+				'owner' => $album->getOwner(),
+				'imagescount' => $album->getNumImages()
 			) );
 	} //$allalbums as $albumfolder
 	return $list;
