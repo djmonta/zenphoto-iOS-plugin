@@ -671,6 +671,7 @@ function createAlbum( $args )
 	if ( !$album->name )
 		return new ZEN_Error( -1, 'Album could not be created ' . $args[ 'name' ] );
 	$album->setTitle( $args[ 'name' ] );
+	$album->setOwner( $args[ 'loginUsername'] );
 	$album->save();
 	return entitysave( array(
 		 'id' => $album->getID(),
