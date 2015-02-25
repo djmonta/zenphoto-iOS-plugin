@@ -591,13 +591,16 @@ function imageUpload( $args )
 		return new ZEN_Error( -1, 'No folder with database ID ' . $args[ 'id' ] . ' found!' );
 	$filepath = getAlbumFolder() . ( $args[ 'parentFolder' ] ? $args[ 'parentFolder' ] . '/' : '' ) . $args[ 'folder' ];
 	$filename = $args[ 'filename' ];
-	$filepath = utf8_decode( $filepath );
-	$filename = utf8_decode( $filename );
+	//$filepath = utf8_decode( $filepath );
+	//$filename = utf8_decode( $filename );
+	$filepath = $filepath;
+	$filename = $filename;
 	// save file
 	$fp       = fopen( $filepath . '/' . $filename, "wb" );
 	fwrite( $fp, base64_decode( $args[ 'file' ] ) );
 	fclose( $fp );
 	$img = newImage( $album, $filename );
+	$img->setOwner( $args[ 'loginUsername'] );
 	//addZenPubData( $args[ 'id' ], $img->filename . '=' . $args[ $img->filename ] );
 	return entitysave( array(
 		 'status' => 'success',
