@@ -788,8 +788,8 @@ function updateCheck($args)
 {
 $args = decode64( $args );
 	//logger( 'updateCheck', ( $args[ 'loglevel' ] ) );
-	debugLog( 'updateCheck '.$args['sysversion'].sysrpcversion);
-	if (getOption('iphone_update') == 1 && $args['sysversion']  > sysrpcversion)
+	debugLog( 'updateCheck SystemVersion:'.$args['sysversion'].' RPCVersion:'.sysrpcversion);
+	if (getOption('iphone_update') == 1 && $args['sysversion'] > sysrpcversion)
 	{
 		return true;
 	} else {
