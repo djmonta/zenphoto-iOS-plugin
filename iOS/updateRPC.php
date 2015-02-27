@@ -4,8 +4,8 @@
  */
 function updateRPC( $gitbranch )
 {
-	$updatebase = "https://raw.github.com/djmonta/zenphoto-iphoneapp-plugin/".$gitbranch."/iphone/ZenRPC.php";
-	$self       = "./iphone/ZenRPC.php";
+	$updatebase = "https://raw.github.com/djmonta/zenphoto-iOS-plugin/".$gitbranch."/iOS/ZenRPC.php";
+	$self       = "./iOS/ZenRPC.php";
 	$contents   = file_get_contents( $updatebase );
 	
 	//$fp = @fopen( $self, 'w' );

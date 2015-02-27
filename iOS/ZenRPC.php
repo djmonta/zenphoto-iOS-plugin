@@ -9,12 +9,12 @@
 //    make sure that the WEBPATH is set to parent directory for correct URL values
 define ('sysrpcversion', "2.0");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
-define( 'SERVERPATH', str_replace( '/plugins/iphone', '', $dir ) );
+define( 'SERVERPATH', str_replace( '/plugins/iOS', '', $dir ) );
 require_once( SERVERPATH . '/zp-core/functions.php' );
 include_once( SERVERPATH . '/zp-core/template-functions.php' );
 require_once( SERVERPATH . '/zp-core/lib-auth.php' );
 
-if (getOption('iphone_phperror') == 0)
+if (getOption('iOS_phperror') == 0)
 {
 error_reporting( E_ERROR | E_PARSE );
 ini_set( "display_errors", "0" );
@@ -789,7 +789,7 @@ function updateCheck($args)
 $args = decode64( $args );
 	//logger( 'updateCheck', ( $args[ 'loglevel' ] ) );
 	debugLog( 'updateCheck SystemVersion:'.$args['sysversion'].' RPCVersion:'.sysrpcversion);
-	if (getOption('iphone_update') == 1 && $args['sysversion'] > sysrpcversion)
+	if (getOption('iOS_update') == 1 && $args['sysversion'] > sysrpcversion)
 	{
 		return true;
 	} else {
