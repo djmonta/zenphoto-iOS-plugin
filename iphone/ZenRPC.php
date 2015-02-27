@@ -1,18 +1,20 @@
 <?php
 /*
  * ZenRPC.php
+ *
  * Originally made by Joseph Philbert(philbertphotos)
  * Modified by Sachiko Miyamoto(monta)
+ *
  */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
-define ('sysrpcversion', "4.5.0.20130529");
+define ('sysrpcversion', "2.0");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
 define( 'SERVERPATH', str_replace( '/plugins/iphone', '', $dir ) );
 require_once( SERVERPATH . '/zp-core/functions.php' );
 include_once( SERVERPATH . '/zp-core/template-functions.php' );
 require_once( SERVERPATH . '/zp-core/lib-auth.php' );
 
-if (getOption('zenpublisher_phperror') == 0)
+if (getOption('iphone_phperror') == 0)
 {
 error_reporting( E_ERROR | E_PARSE );
 ini_set( "display_errors", "0" );
@@ -787,11 +789,11 @@ function updateCheck($args)
 $args = decode64( $args );
 	//logger( 'updateCheck', ( $args[ 'loglevel' ] ) );
 	debugLog( 'updateCheck '.$args['sysversion'].sysrpcversion);
-	if (getOption('zenpublisher_update') == 1 && $args['sysversion']  > sysrpcversion)
+	if (getOption('iphone_update') == 1 && $args['sysversion']  > sysrpcversion)
 	{
-	return true;
-	}else{
-return false;
-}
+		return true;
+	} else {
+		return false;
+	}
 }
 ?>
