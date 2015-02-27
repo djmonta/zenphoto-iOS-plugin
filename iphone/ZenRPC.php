@@ -1,4 +1,9 @@
 <?php
+/*
+ * ZenRPC.php
+ * Originally made by Joseph Philbert(philbertphotos)
+ * Modified by Sachiko Miyamoto(monta)
+ */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
 define ('sysrpcversion', "4.5.0.20130529");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
