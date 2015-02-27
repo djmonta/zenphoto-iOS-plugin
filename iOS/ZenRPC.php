@@ -4,6 +4,7 @@
  *
  * Originally made by Joseph Philbert(philbertphotos)
  * Modified by Sachiko Miyamoto(monta)
+ * ios-app-version == sysrpcversion !!
  *
  */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
