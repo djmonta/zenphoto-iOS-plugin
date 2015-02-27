@@ -1,4 +1,4 @@
-# zenphoto-iphoneapp-plugin
+# zenphoto-iOS-plugin
 This plugin require for Zenphoto for iOS
 
 ## Download this plugin
