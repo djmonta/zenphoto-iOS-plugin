@@ -5,7 +5,7 @@
  * @author Sachiko Miyamoto
  * @package plugins
  */
-$plugin_description = gettext("Add thumbnail size to cache manager use for iPhone app");
+$plugin_description = gettext("Add Zenphoto for iOS required functions");
 $plugin_author = "Sachiko Miyamoto (djmonta)";
 $option_interface = 'iphone';
 
