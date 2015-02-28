@@ -88,7 +88,7 @@ function output( $result )
 //read the data header 
 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] !== 'POST' ) {
 	header( 'Content-Type: text/plain' );
-	die( 'ZenphotoPublisher requests allowed only.' );
+	die( 'Zenphoto for iOS requests allowed only.' );
 } //isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] !== 'POST'
 global $HTTP_RAW_POST_DATA;
 if ( empty( $HTTP_RAW_POST_DATA ) ) {
@@ -110,7 +110,7 @@ function addZenPubData( $id, $data )
 {
 	/* Adds Zenphoto published information to database. */
 	$parts    = explode( "=", $data );
-	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'zenphotopublisher' AND `aux` = " . db_quote( $id ) );
+	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'iOS' AND `aux` = " . db_quote( $id ) );
 	
 	if ( $readitem ) {
 		// creating or updating key
@@ -125,17 +125,17 @@ function addZenPubData( $id, $data )
 		if ( $readitem = null ) {
 			query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( array(
 				 $parts[ 0 ] => $parts[ 1 ] 
-			) ) ) . ", `type` = 'zenphotopublisher' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'zenphotopublisher'" );
+			) ) ) . ", `type` = 'iOS' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'iOS'" );
 		} //$readitem = null
 		else {
 			$marr = array_merge( $arr, array(
 				 $parts[ 0 ] => $parts[ 1 ] 
 			) );
-			query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( $marr ) ) . ", `type` = 'zenphotopublisher' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'zenphotopublisher'" );
+			query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( $marr ) ) . ", `type` = 'iOS' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'iOS'" );
 		}
 	} //$readitem
 	else {
-		query( "INSERT INTO " . prefix( 'plugin_storage' ) . " (`type`,`aux`,`data`) VALUES ('zenphotopublisher'," . db_quote( $id ) . ",'" . json_encode( array(
+		query( "INSERT INTO " . prefix( 'plugin_storage' ) . " (`type`,`aux`,`data`) VALUES ('iOS'," . db_quote( $id ) . ",'" . json_encode( array(
 			 $parts[ 0 ] => $parts[ 1 ] 
 		) ) . "')" );
 	}
@@ -144,7 +144,7 @@ function addZenPubData( $id, $data )
 //Read Data
 function readZenPubData( $id, $item )
 {
-	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'zenphotopublisher' AND `aux` = " . db_quote( $id ) );
+	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'iOS' AND `aux` = " . db_quote( $id ) );
 	$v        = json_decode( $readitem[ 'data' ], true );
 	return $v[ $item ];
 }
@@ -152,14 +152,14 @@ function readZenPubData( $id, $item )
 //Delete record or remove item from array
 function delZenPubData( $id, $item, $why )
 {
-	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'zenphotopublisher' AND `aux` = " . db_quote( $id ) );
+	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'iOS' AND `aux` = " . db_quote( $id ) );
 	$arr      = $readitem[ 'data' ];
 	if ( $why ) {
-		query( "DELETE FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'zenphotopublisher' AND `aux` = " . db_quote( $id ) );
+		query( "DELETE FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'iOS' AND `aux` = " . db_quote( $id ) );
 	} //$why
 	else {
 		unset( $arr[ $item ] );
-		query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( $arr ) ) . ", `type` = 'zenphotopublisher' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'zenphotopublisher'" );
+		query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( $arr ) ) . ", `type` = 'iOS' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'iOS'" );
 	}
 }
 
@@ -562,8 +562,8 @@ function getsysVersion( $args )
 	//return $login_state;
 	//$args = decode64( $args );
 	//logger( 'getversion', ( $args[ 'loglevel' ] ) );
-	//	$readitems = query_full_array("SELECT id, `aux`, `data` FROM ".prefix('plugin_storage')." WHERE `type` = 'zenphotopublisher'");
-	//$readitem = query_single_row($sql = "SELECT id, `aux`, `data` FROM ".prefix('plugin_storage')." WHERE `type` = 'zenphotopubliser' AND `aux` = ".db_quote(22));
+	//	$readitems = query_full_array("SELECT id, `aux`, `data` FROM ".prefix('plugin_storage')." WHERE `type` = 'iOS'");
+	//$readitem = query_single_row($sql = "SELECT id, `aux`, `data` FROM ".prefix('plugin_storage')." WHERE `type` = 'iOS' AND `aux` = ".db_quote(22));
 	//$v = var_export( $readitem, true );
 	return 'Zenphoto: ' . getversion() . ' running on PHP ' . phpversion();
 }
