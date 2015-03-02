@@ -20,7 +20,7 @@ class iOS {
 			if (class_exists('cacheManager')) {
 			cacheManager::deleteThemeCacheSizes('iOS');
 				// cacheManager::addThemeCacheSize('iOS', NULL, getOption('iOS_width'), getOption('iOS_height'), getOption('iOS_cropw'), getOption('iOS_croph'), NULL, NULL, true, NULL, NULL, NULL);
-				cacheManager::addThemeCacheSize('iOS', getOption('iOS_width'), NULL, NULL, getOption('iOS_cropw'), getOption('iOS_croph'), NULL, NULL, true, NULL, NULL, NULL);
+				cacheManager::addThemeCacheSize('iOS', getOption('iOS_width'), NULL, NULL, getOption('iOS_cropw'), getOption('iOS_croph'), NULL, NULL, NULL, NULL, NULL, NULL);
 			}
 	}
 
