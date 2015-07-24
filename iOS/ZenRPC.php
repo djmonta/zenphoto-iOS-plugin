@@ -8,7 +8,7 @@
  *
  */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
-define ('sysrpcversion', "2.1.3");
+define ('sysrpcversion', "2.1.4");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
 define( 'SERVERPATH', str_replace( '/plugins/iOS', '', $dir ) );
 require_once( SERVERPATH . '/zp-core/functions.php' );
@@ -95,7 +95,11 @@ if ( empty( $HTTP_RAW_POST_DATA ) ) {
 	$data = file_get_contents( 'php://input' );
 } //empty( $HTTP_RAW_POST_DATA )
 else {
-	$data =& $HTTP_RAW_POST_DATA;
+	if ( substr($HTTP_RAW_POST_DATA, 0) == "%" ) {
+		$data =& urldecode($HTTP_RAW_POST_DATA);
+	} else {
+		$data =& $HTTP_RAW_POST_DATA;
+	}
 }
 $pieces     = explode( "=", $data );
 $methodname = getmethod( $pieces[ 0 ] );
