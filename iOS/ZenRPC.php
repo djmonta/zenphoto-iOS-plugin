@@ -8,10 +8,11 @@
  *
  */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
-define ('sysrpcversion', "2.2.0");
+define ('sysrpcversion', "2.2.1");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
 define( 'SERVERPATH', str_replace( '/plugins/iOS', '', $dir ) );
 require_once( SERVERPATH . '/zp-core/functions.php' );
+require_once( SERVERPATH . '/zp-core/functions-common.php' );
 include_once( SERVERPATH . '/zp-core/template-functions.php' );
 require_once( SERVERPATH . '/zp-core/lib-auth.php' );
 
