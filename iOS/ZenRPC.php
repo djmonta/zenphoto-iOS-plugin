@@ -472,7 +472,8 @@ function getAlbumImages( $args )
 			'url' => WEBPATH . 'index.php?album=' . urlencode( $_zp_current_image->album->name ) . '&image=' . urlencode( $_zp_current_image->filename ),
 			'folder' => $_zp_current_image->getAlbum()->getFolder(),
 			// added by monta
-			'thumbnail' => $_zp_current_image->getThumbImageFile()
+			'thumbnail' => $_zp_current_image->getThumbImageFile(),
+			'description' => $_zp_current_image->getBareImageDesc()
 		) );
 	} //next_image( true )
 	//writelog((var_export($list, true)));
