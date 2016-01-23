@@ -473,7 +473,7 @@ function getAlbumImages( $args )
 			'folder' => $_zp_current_image->getAlbum()->getFolder(),
 			// added by monta
 			'thumbnail' => $_zp_current_image->getThumbImageFile(),
-			'description' => $_zp_current_image->getBareImageDesc()
+			'description' => $_zp_current_image->getDesc()
 		) );
 	} //next_image( true )
 	//writelog((var_export($list, true)));
