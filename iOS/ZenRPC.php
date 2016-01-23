@@ -612,11 +612,11 @@ function imageUpload( $args )
 	// save file
 	//$fp       = fopen( $filepath . '/' . $filename, "wb" );
 	if ($fp = fopen( $filepath . '/' . $filename, "wb") === FALSE) {
-		return new ZEN_Error( -1, 'Cannot open ' $filepath . '/' $filename );
+		return new ZEN_Error( -1, 'Cannot open ' . $filepath . '/' . $filename );
 	}
 	//fwrite( $fp, base64_decode( $args[ 'file' ] ) );
 	if (fwrite($fp, base64_decode( $args[ 'file' ] ) ) === FALSE) {
-    return new ZEN_Error( -1, 'Cannot write to file ' $filename );
+    return new ZEN_Error( -1, 'Cannot write to file ' . $filename );
   }
 
 	fclose( $fp );
