@@ -419,23 +419,23 @@ function getAlbumList( $args )
 				'hasSubalbum' => hasSubAlbums( $album->getID() ),				
 			) );
 		else*/
-			$list[ ] = entitysave( array(
-				 'id' => $album->getID(),
-				'name' => $album->getTitle(),
-				'folder' => getFolderNode( $album->name ),
-				'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
-				'parentFolder' => $album->getParent()->name,
-				'description' => $album->getDesc(),
-				'location' => $album->getLocation(),
-				'hasSubalbum' => hasSubAlbums( $album->getID() ),
-				'albumpassword' => readZenPubData( $album->getID(), 'albumpassword' ),
-				'show' => $album->getShow(),
-				'commentson' => $album->getCommentsAllowed(),
-				// added by monta
-				'thumbnail' => $album->getAlbumThumbImage()->getFullImageURL(),
-				'owner' => $album->getOwner(),
-				'imagescount' => $album->getNumImages()
-			) );
+		$list[ ] = entitysave( array(
+			 'id' => $album->getID(),
+			'name' => $album->getTitle(),
+			'folder' => getFolderNode( $album->name ),
+			'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
+			'parentFolder' => $album->getParent()->name,
+			'description' => $album->getDesc(),
+			'location' => $album->getLocation(),
+			'hasSubalbum' => hasSubAlbums( $album->getID() ),
+			'albumpassword' => readZenPubData( $album->getID(), 'albumpassword' ),
+			'show' => $album->getShow(),
+			'commentson' => $album->getCommentsAllowed(),
+			// added by monta
+			'thumbnail' => $album->getAlbumThumbImage()->getFullImageURL(),
+			'owner' => $album->getOwner(),
+			'imagescount' => $album->getNumImages()
+		) );
 	} //$allalbums as $albumfolder
 	return $list;
 }
@@ -610,13 +610,17 @@ function imageUpload( $args )
 	$filename = $filename;
 	// save file
 	$fp       = fopen( $filepath . '/' . $filename, "wb" );
-	fwrite( $fp, base64_decode( $args[ 'file' ] ) );
+	//fwrite( $fp, base64_decode( $args[ 'file' ] ) );
+	if (fwrite($fp, base64_decode( $args[ 'file' ] ) ) === FALSE) {
+    return new ZEN_Error( -1, 'Cannot write to file ' $filename );
+  }
+
 	fclose( $fp );
 	$img = newImage( $album, $filename );
 	$img->setOwner( $args[ 'loginUsername'] );
 	//addZenPubData( $args[ 'id' ], $img->filename . '=' . $args[ $img->filename ] );
 	return entitysave( array(
-		 'status' => 'success',
+		'status' => 'success',
 		'id' => $img->getID(),
 		'name' => $img->filename,
 		'url' => WEBPATH . 'index.php?album=' . urlencode( $img->album->name ) . '&image=' . urlencode( $img->filename ) 
