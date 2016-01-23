@@ -609,7 +609,10 @@ function imageUpload( $args )
 	$filepath = $filepath;
 	$filename = $filename;
 	// save file
-	$fp       = fopen( $filepath . '/' . $filename, "wb" );
+	//$fp       = fopen( $filepath . '/' . $filename, "wb" );
+	if ($fp = fopen( $filepath . '/' . $filename, "wb") === FALSE) {
+		return new ZEN_Error( -1, 'Cannot open ' $filepath . '/' $filename );
+	}
 	//fwrite( $fp, base64_decode( $args[ 'file' ] ) );
 	if (fwrite($fp, base64_decode( $args[ 'file' ] ) ) === FALSE) {
     return new ZEN_Error( -1, 'Cannot write to file ' $filename );
