@@ -412,13 +412,13 @@ function getAlbumList( $args )
 		//
 		if ( $album->isDynamic() || !$album->getID() )
 			continue;
-		if ( $args[ 'simplelist' ] )
+		/*if ( $args[ 'simplelist' ] )
 			$list[ ] = entitysave( array(
 				 'name' => $album->getTitle(),
 				'id' => $album->getFolder(),
 				'hasSubalbum' => hasSubAlbums( $album->getID() ),				
 			) );
-		else
+		else*/
 			$list[ ] = entitysave( array(
 				 'id' => $album->getID(),
 				'name' => $album->getTitle(),
