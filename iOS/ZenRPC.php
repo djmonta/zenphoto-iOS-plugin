@@ -31,7 +31,7 @@ function getmethod( $str )
 {
 	// Create the map of RPC method names to the relevant functions 
 	$bindings = ( array(
-		 'zenphoto.login' => 'authorize',
+		'zenphoto.login' => 'authorize',
 		'zenphoto.check' => 'checkConnection',
 		'zenphoto.album.getList' => 'getAlbumList',
 		'zenphoto.album.getImages' => 'getAlbumImages',
@@ -40,6 +40,7 @@ function getmethod( $str )
 		'zenphoto.album.edit' => 'changeAlbum',
 		'zenphoto.image.delete' => 'deleteImage',
 		'zenphoto.image.upload' => 'imageUpload',
+		'zenphoto.image.edit' => 'changeImage',
 		'zenphoto.get.comments' => 'getImageComments',
 		'zenphoto.get.thumbnail' => 'getAlbumThumbnail',
 		'zenphoto.get.ratings' => 'getImageRatings',
@@ -464,7 +465,7 @@ function getAlbumImages( $args )
 		else
 			$imagedate = false;
 		$list[ ] = entitysave( array(
-			 'id' => $_zp_current_image->getID(),
+			'id' => $_zp_current_image->getID(),
 			'albumid' => $_zp_current_image->getAlbum()->getID(),
 			'name' => $_zp_current_image->filename,
 			'shortdate' => date( "Y-m-d", ( strtotime( str_replace( " ", "", ( str_replace( ":", "", $imagedate ) ) ) ) ) ),
@@ -755,7 +756,7 @@ function changeAlbum( $args )
 	} //$newfolder && $album->name != $newfolder
 	$parent = $album->getParent();
 	return entitysave( array(
-		 'id' => $album->getID(),
+		'id' => $album->getID(),
 		'name' => $album->getTitle(),
 		'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
 		'folder' => getFolderNode( $album->name ),
@@ -766,6 +767,61 @@ function changeAlbum( $args )
 		'albumpassword' => readZenPubData( $album->getID(), 'albumpassword' ),
 		'show' => $album->getShow(),
 		'commentson' => $album->getCommentsAllowed() 
+	) );
+}
+
+/**
+ *Change Image
+ **/
+function changeImage( $args )
+{
+	global $_zp_current_image;
+	if ( is_object( $login_state = authorize( $args ) ) )
+		return $login_state;
+	$args = decode64( $args );
+	logger( 'changeImage', ( $args[ 'loglevel' ] ) );
+	$imageobject = getItemByID( "images", $args[ 'id' ] );
+	if ( !( $image = $imageobject ) )
+		return new ZEN_Error( -1, 'No image with database ID ' . $args[ 'id' ] . ' found!' );
+	makeImageCurrent( $image );
+	//
+	//    change image values
+	//
+	$image->setDesc( nl2br( $args[ 'description' ] ) );
+	$image->setLocation( $args[ 'location' ] );
+	$image->save();
+	//
+	//    rename/move action
+	//
+	$newfilename = $args[ 'filename' ];
+	if ( $newfilename && $image->filename != $newfilename ) {
+		logger( 'changeImage.rename action', ( $args[ 'loglevel' ] ) );
+		$result = $image->rename( $newfilename );
+		switch ( $result ) {
+			case '1':
+				return new ZEN_Error( -5, 'General change filename error!' );
+			case '3':
+				return new ZEN_Error( -5, 'There already exists an image with this name' );
+		}
+	}
+
+	$meta = $image->getmetadata();
+	if ( $meta[ 'EXIFDateTimeOriginal' ] )
+		$imagedate = $meta[ 'EXIFDateTimeOriginal' ];
+	else
+		$imagedate = false;
+
+	return entitysave( array(
+		'id' => $image->getID(),
+		'albumid' => $image->getAlbum()->getID(),
+		'name' => $image->filename,
+		'shortdate' => date( "Y-m-d", ( strtotime( str_replace( " ", "", ( str_replace( ":", "", $imagedate ) ) ) ) ) ),
+		'longdate' => $imagedate,
+		'url' => WEBPATH . 'index.php?album=' . urlencode( $image->album->name ) . '&image=' . urlencode( $image->filename ),
+		'folder' => $image->getAlbum()->getFolder(),
+		// added by monta
+		'thumbnail' => $image->getThumbImageFile(),
+		'description' => $image->getDesc()
 	) );
 }
 
