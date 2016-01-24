@@ -421,7 +421,7 @@ function getAlbumList( $args )
 			) );
 		else*/
 		$list[ ] = entitysave( array(
-			 'id' => $album->getID(),
+			'id' => $album->getID(),
 			'name' => $album->getTitle(),
 			'folder' => getFolderNode( $album->name ),
 			'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
@@ -500,7 +500,7 @@ function getImageComments( $args )
 	for ( $i = 0; $i < count( $comments ); ++$i ) {
 		$x              = $i + 1;
 		$commentList[ ] = entitysave( array(
-			 'commentData' => $comments[ $i ][ "comment" ],
+			'commentData' => $comments[ $i ][ "comment" ],
 			'commentId' => $comments[ $i ][ "id" ],
 			'commentDate' => strtotime( str_replace( ".000000", "", $comments[ $i ][ "date" ] ) ),
 			'commentUsername' => $comments[ $i ][ "email" ],
@@ -611,12 +611,12 @@ function imageUpload( $args )
 	$filepath = $filepath;
 	$filename = $filename;
 	// save file
-	//$fp       = fopen( $filepath . '/' . $filename, "wb" );
-	if ($fp = fopen( $filepath . '/' . $filename, "wb") === FALSE) {
+	$fp       = fopen( $filepath . '/' . $filename, "wb" );
+	if (!$fp) {
 		return new ZEN_Error( -1, 'Cannot open ' . $filepath . '/' . $filename );
 	}
 	//fwrite( $fp, base64_decode( $args[ 'file' ] ) );
-	if (fwrite($fp, base64_decode( $args[ 'file' ] ) ) === FALSE) {
+	if ( $fw = fwrite($fp, base64_decode( $args[ 'file' ] ) ) === FALSE) {
     return new ZEN_Error( -1, 'Cannot write to file ' . $filename );
   }
 
@@ -701,7 +701,7 @@ function createAlbum( $args )
 	$album->setOwner( $args[ 'loginUsername'] );
 	$album->save();
 	return entitysave( array(
-		 'id' => $album->getID(),
+		'id' => $album->getID(),
 		'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
 		'folder' => getFolderNode( $album->name ),
 		'parentFolder' => $album->getParent() 
@@ -747,11 +747,11 @@ function changeAlbum( $args )
 		$result = $albumobject->move( $newfolder );
 		switch ( $result ) {
 			case '1':
-				return new ZEN_Error( -5, 'General change folder error!' );
+				return new ZEN_Error( -1, 'General change folder error!' );
 			case '3':
-				return new ZEN_Error( -5, 'There already exists an album or sub-album with this name' );
+				return new ZEN_Error( -1, 'There already exists an album or sub-album with this name' );
 			case '4':
-				return new ZEN_Error( -5, 'You canot make a sub-folder of the current folder' );
+				return new ZEN_Error( -1, 'You canot make a sub-folder of the current folder' );
 		} //$result
 	} //$newfolder && $album->name != $newfolder
 	$parent = $album->getParent();
@@ -799,9 +799,9 @@ function changeImage( $args )
 		$result = $image->rename( $newfilename );
 		switch ( $result ) {
 			case '1':
-				return new ZEN_Error( -5, 'General change filename error!' );
+				return new ZEN_Error( -1, 'General change filename error!' );
 			case '3':
-				return new ZEN_Error( -5, 'There already exists an image with this name' );
+				return new ZEN_Error( -1, 'There already exists an image with this name' );
 		}
 	}
 
