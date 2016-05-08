@@ -8,7 +8,7 @@
  *
  */
 //    make sure that the WEBPATH is set to parent directory for correct URL values
-define ('sysrpcversion', "2.2.1");
+define ('sysrpcversion', "2.2.2");
 $dir        = str_replace( '\\', '/', realpath( dirname( __FILE__ ) ) );
 define( 'SERVERPATH', str_replace( '/plugins/iOS', '', $dir ) );
 require_once( SERVERPATH . '/zp-core/functions.php' );
@@ -29,7 +29,7 @@ ini_set( "display_errors", "0" );
  **/
 function getmethod( $str )
 {
-	// Create the map of RPC method names to the relevant functions 
+	// Create the map of RPC method names to the relevant functions
 	$bindings = ( array(
 		'zenphoto.login' => 'authorize',
 		'zenphoto.check' => 'checkConnection',
@@ -48,7 +48,7 @@ function getmethod( $str )
 		'zenphoto.get.update' => 'updateCheck',
 		'zenphoto.chk.func' => 'checkFunc',
 		'zenphoto.add.comment' => 'addImageComments',
-		'zenphoto.test' => 'test' 
+		'zenphoto.test' => 'test'
 	) );
 	foreach ( $bindings as $key => $val ) {
 		if ( $key == $str ) {
@@ -69,7 +69,7 @@ class ZEN_Error
 	{
 		$result = json_encode( array(
 			 'faultCode' => $this->code,
-			'faultString' => $this->message 
+			'faultString' => $this->message
 		) );
 		header( 'Connection: close' );
 		header( 'Content-Type: application/json; charset=UTF-8' );
@@ -87,7 +87,7 @@ function output( $result )
 	echo trim( $result );
 	exit;
 }
-//read the data header 
+//read the data header
 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] !== 'POST' ) {
 	header( 'Content-Type: text/plain' );
 	die( 'Zenphoto for iOS requests allowed only.' );
@@ -117,32 +117,32 @@ function addZenPubData( $id, $data )
 	/* Adds Zenphoto published information to database. */
 	$parts    = explode( "=", $data );
 	$readitem = query_single_row( $sql = "SELECT id, `aux`, `data` FROM " . prefix( 'plugin_storage' ) . " WHERE `type` = 'iOS' AND `aux` = " . db_quote( $id ) );
-	
+
 	if ( $readitem ) {
 		// creating or updating key
 		$arr = json_decode( $readitem[ 'data' ], true );
-		
+
 		foreach ( $arr as $key => $value ) {
 			if ( $key == $parts[ 0 ] ) {
 				$arr[ $key ] = $parts[ 1 ];
 			} //$key == $parts[ 0 ]
 		} //$arr as $key => $value
-		
+
 		if ( $readitem = null ) {
 			query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( array(
-				 $parts[ 0 ] => $parts[ 1 ] 
+				 $parts[ 0 ] => $parts[ 1 ]
 			) ) ) . ", `type` = 'iOS' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'iOS'" );
 		} //$readitem = null
 		else {
 			$marr = array_merge( $arr, array(
-				 $parts[ 0 ] => $parts[ 1 ] 
+				 $parts[ 0 ] => $parts[ 1 ]
 			) );
 			query( "UPDATE " . prefix( 'plugin_storage' ) . " SET `data` = " . db_quote( json_encode( $marr ) ) . ", `type` = 'iOS' WHERE `aux` = " . db_quote( $id ) . " AND `type` = 'iOS'" );
 		}
 	} //$readitem
 	else {
 		query( "INSERT INTO " . prefix( 'plugin_storage' ) . " (`type`,`aux`,`data`) VALUES ('iOS'," . db_quote( $id ) . ",'" . json_encode( array(
-			 $parts[ 0 ] => $parts[ 1 ] 
+			 $parts[ 0 ] => $parts[ 1 ]
 		) ) . "')" );
 	}
 }
@@ -288,7 +288,7 @@ function checkLogon( $user, $pass )
 	global $_zp_authority;
 	$userobj = getAnAdmin( array(
 		 '`user`=' => $user,
-		'`valid`=' => 1 
+		'`valid`=' => 1
 	) );
 	debugLog( 'checkLogon.userobject: ' . $userobj );
 	if ( $userobj ) {
@@ -346,7 +346,7 @@ function logger( $string, $loglevel )
 }
 /*******************************************************************************************************
  *
- * Functions defining the behaviour of the server 
+ * Functions defining the behaviour of the server
  *
  **/
 /**
@@ -365,7 +365,7 @@ function authorize( $args )
 	debugLog( 'hashvalue: ' . $hash );
 	$userobj = getAnAdmin( array(
 		 '`user`=' => $args[ 'loginUsername' ],
-		'`valid`=' => 1 
+		'`valid`=' => 1
 	) );
 	if ( $userobj == '' ) {
 		return new ZEN_Error( -1, 'Incorrect username or password ' . $args[ 'loginUsername' ] . ' ' . $args[ 'loginPassword' ] );
@@ -417,7 +417,7 @@ function getAlbumList( $args )
 			$list[ ] = entitysave( array(
 				 'name' => $album->getTitle(),
 				'id' => $album->getFolder(),
-				'hasSubalbum' => hasSubAlbums( $album->getID() ),				
+				'hasSubalbum' => hasSubAlbums( $album->getID() ),
 			) );
 		else*/
 		$list[ ] = entitysave( array(
@@ -505,7 +505,7 @@ function getImageComments( $args )
 			'commentDate' => strtotime( str_replace( ".000000", "", $comments[ $i ][ "date" ] ) ),
 			'commentUsername' => $comments[ $i ][ "email" ],
 			'commentRealname' => $comments[ $i ][ "name" ],
-			'commentUrl' => $args[ "url" ] . "#zp_comment_id_" . $x 
+			'commentUrl' => $args[ "url" ] . "#zp_comment_id_" . $x
 		) );
 	} //$i = 0; $i < count( $comments ); ++$i
 	if ( empty( $commentList ) )
@@ -528,7 +528,7 @@ function addImageComments( $args )
 	$imageobject = getItemByID( "images", $args[ 'id' ] );
 	$userobj     = $_zp_authority->getAnAdmin( array(
 		 'user=' => $args[ 'loginUsername' ],
-		'valid=' => 1 
+		'valid=' => 1
 	) );
 	$username    = $args[ 'loginUsername' ];
 	$commentText = $args[ 'commentText' ];
@@ -628,7 +628,7 @@ function imageUpload( $args )
 		'status' => 'success',
 		'id' => $img->getID(),
 		'name' => $img->filename,
-		'url' => WEBPATH . 'index.php?album=' . urlencode( $img->album->name ) . '&image=' . urlencode( $img->filename ) 
+		'url' => WEBPATH . 'index.php?album=' . urlencode( $img->album->name ) . '&image=' . urlencode( $img->filename )
 	) );
 }
 /**
@@ -647,7 +647,7 @@ function deleteImage( $args )
 	if ( $imageobject->filename ) {
 		delZenPubData( $args[ 'id' ], $imageobject->filename );
 		$imageobject->remove();
-		
+
 		return true;
 	} //$imageobject->filename
 	else {
@@ -704,7 +704,7 @@ function createAlbum( $args )
 		'id' => $album->getID(),
 		'url' => WEBPATH . 'index.php?album=' . urlencode( $album->name ) . '/',
 		'folder' => getFolderNode( $album->name ),
-		'parentFolder' => $album->getParent() 
+		'parentFolder' => $album->getParent()
 	) );
 }
 /**
@@ -730,7 +730,7 @@ function changeAlbum( $args )
 	$album->setTitle( $args[ 'name' ] );
 	$album->setDesc( nl2br( $args[ 'description' ] ) );
 	$album->setLocation( $args[ 'location' ] );
-	
+
 	if ( ( $args[ 'albumpassword' ] ) == '' )
 		$album->setPassword( '' );
 	else
@@ -766,7 +766,7 @@ function changeAlbum( $args )
 		//'albumpassword' => $album->getPassword(),
 		'albumpassword' => readZenPubData( $album->getID(), 'albumpassword' ),
 		'show' => $album->getShow(),
-		'commentson' => $album->getCommentsAllowed() 
+		'commentson' => $album->getCommentsAllowed()
 	) );
 }
 
@@ -803,6 +803,8 @@ function changeImage( $args )
 			case '3':
 				return new ZEN_Error( -1, 'There already exists an image with this name' );
 		}
+		$image->setTitle( $newfilename );
+		$image->save();
 	}
 
 	$meta = $image->getmetadata();
