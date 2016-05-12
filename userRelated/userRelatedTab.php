@@ -163,7 +163,10 @@ echo '</head>' . "\n";
 						<button type="submit"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/pass.png" alt="" /><strong><?php echo gettext("Apply"); ?></strong></button>
 						<button type="reset"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/reset.png" alt="" /><strong><?php echo gettext("Reset"); ?></strong></button>
 					</span>
-					<input type="file" size="40" name="profile_picture_url" />
+					<br class="clearall" />
+					<label for="profile_picture_url">Profile Picture</label>
+					<br class="clearall" />
+					<input type="file" size="40" name="profile_picture_url" id="profile_picture_url"/>
 					<?php if (!empty($userobj->get('profile_picture_url'))) { ?>
 						<img src="<?php echo html_encode($userobj->get('profile_picture_url')); ?>" style="width: 120px; height: auto;" />
 					<?php } ?>
