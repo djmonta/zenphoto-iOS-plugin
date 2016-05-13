@@ -46,6 +46,16 @@ if (isset($_GET['action'])) {
 				}
 				zp_apply_filter('save_admin_custom_data', $updated, $userobj, $i, $updated);
 				$userobj->save();
+			} elseif (isset($_SESSION['facebook_access_token'])) {
+				$plainOldArray = userRelated::facebook($_SESSION['facebook_access_token']);
+				$newdata = $plainOldArray['id'];
+				$olddata = $userobj->get('fb_id');
+				$userobj->set('fb_id', $newdata);
+				if ($olddata != $newdata) {
+					$updated = true;
+				}
+				zp_apply_filter('save_admin_custom_data', $updated, $userobj, $i, $updated);
+				$userobj->save();
 			}
 		}
 		header("Location: " . FULLWEBPATH . "/" . USER_PLUGIN_FOLDER . '/userRelated/userRelatedTab.php?page=users&tab=profile&applied=' . $msg);
@@ -63,7 +73,7 @@ function saveImage($file) {
 				case UPLOAD_ERR_OK: // OK
 					break;
 				case UPLOAD_ERR_NO_FILE:   // ファイル未選択
-					continue 2;
+					exit;
 				case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
 				case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過
 					throw new RuntimeException("ファイルサイズが大きすぎます");
@@ -167,10 +177,11 @@ echo '</head>' . "\n";
 					<label for="profile_picture_url">Profile Picture</label>
 					<br class="clearall" />
 					<input type="file" size="40" name="profile_picture_url" id="profile_picture_url"/>
-					<?php if (!empty($userobj->get('profile_picture_url'))) { ?>
+					<?php if ($userobj->get('profile_picture_url')) { ?>
 						<img src="<?php echo html_encode($userobj->get('profile_picture_url')); ?>" style="width: 120px; height: auto;" />
 					<?php } ?>
 					<br class="clearall" />
+					<?php userRelated::facebookLoginUrl(); ?>
 					<p class="buttons">
 						<button type="submit"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/pass.png" alt="" /><strong><?php echo gettext("Apply"); ?></strong></button>
 						<button type="reset"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/reset.png" alt="" /><strong><?php echo gettext("Reset"); ?></strong></button>

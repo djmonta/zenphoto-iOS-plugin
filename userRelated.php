@@ -13,10 +13,12 @@
  * @subpackage users
  */
 // force UTF-8 Ø
-
 $plugin_is_filter = 5 | CLASS_PLUGIN;
 $plugin_description = gettext("Add User Profile Picture and Facebook, Twitter, Google+ Integrations.");
 $plugin_author = "Sachiko Miyamoto (djmonta)";
+$option_interface = 'userRelated';
+
+require_once __DIR__ . '/userRelated/facebook-sdk-v5/autoload.php';
 
 class userRelated {
 	function __construct() {
@@ -76,9 +78,27 @@ class userRelated {
 			}
 		}
 	}
+	function getOptionsSupported() {
+		global $_zp_gallery;
+		$options = array(
+						gettext('Enable Facebook Integrations') => array('key'    => 'fb_integration', 'type' => OPTION_TYPE_CHECKBOX,
+										'desc'   => gettext('Enable or Disable Facebook Integrations'),
+										'order'  => 1),
+						gettext('Facebook App ID')					 => array('key'		 => 'fb_app_id', 'type'	 => OPTION_TYPE_TEXTBOX,
+										'desc'	 => gettext("Facebook App ID"),
+										'order'	 => 2),
+						gettext('Facebook App Secret')					 => array('key'		 => 'fb_app_secret', 'type'	 => OPTION_TYPE_TEXTBOX,
+										'desc'	 => gettext("Facebook App Secret"),
+										'order'	 => 3)
+		);
+		return $options;
+	}
+
+
 	static function fields() {
 		return array(
-						array('table' => 'administrators', 'name' => 'profile_picture_url', 'desc' => gettext('Profile Picture URL'), 'type' => 'tinytext')
+						array('table' => 'administrators', 'name' => 'profile_picture_url', 'desc' => gettext('Profile Picture URL'), 'type' => 'tinytext'),
+						array('table' => 'administrators', 'name' => 'fb_id', 'desc' => gettext('Facebook User ID'), 'type' => 'tinytext')
 		);
 	}
 
@@ -163,6 +183,49 @@ class userRelated {
 	static function setCustomData($obj, $values) {
 		foreach ($values as $field => $value) {
 			$obj->set($field, $value);
+		}
+	}
+
+	static function facebookLoginUrl() {
+		if (getOption('fb_integration')) {
+			$fb = new Facebook\Facebook([
+			  'app_id' => getOption('fb_app_id'),
+			  'app_secret' => getOption('fb_app_secret'),
+			  'default_graph_version' => 'v2.5',
+			]);
+			$helper = $fb->getRedirectLoginHelper();
+			$permissions = ['email']; // optional
+			$loginUrl = $helper->getLoginUrl(FULLWEBPATH . '/' . USER_PLUGIN_FOLDER . '/userRelated/login-callback.php', $permissions);
+
+			echo '<a href="' . $loginUrl . '">Log in with Facebook</a>';
+		}
+	}
+	static function facebook($accessToken) {
+		if (getOption('fb_integration')) {
+			$fb = new Facebook\Facebook([
+			  'app_id' => getOption('fb_app_id'),
+			  'app_secret' => getOption('fb_app_secret'),
+			  'default_graph_version' => 'v2.5',
+			]);
+			if($accessToken) {
+				$oAuth2Client = $fb->getOAuth2Client();
+				$longLivedAccessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+				$fb->setDefaultAccessToken($accessToken);
+				try {
+				  $response = $fb->get('/me');
+				  $plainOldArray = $response->getDecodedBody();
+				} catch(Facebook\Exceptions\FacebookResponseException $e) {
+				  // When Graph returns an error
+				  echo 'Graph returned an error: ' . $e->getMessage();
+				  exit;
+				} catch(Facebook\Exceptions\FacebookSDKException $e) {
+				  // When validation fails or other local issues
+				  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+				  exit;
+				}
+
+			}
+			return $plainOldArray;
 		}
 	}
 
