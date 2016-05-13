@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
 	XSRFdefender($action);
 	if ($action == 'profile') {
 		if ($userobj->getValid()) {
-			if (isset($_FILES['profile_picture_url'])) {
+			if (isset($_FILES['profile_picture_url']) && $_FILES['profile_picture_url']['error'] != UPLOAD_ERR_NO_FILE) {
 				$path = saveImage($_FILES['profile_picture_url']);
 				$newdata = str_replace(SERVERPATH, FULLWEBPATH, $path);
 				$olddata = $userobj->get('profile_picture_url');
@@ -72,8 +72,6 @@ function saveImage($file) {
 			switch ($file['error']) {
 				case UPLOAD_ERR_OK: // OK
 					break;
-				case UPLOAD_ERR_NO_FILE:   // ファイル未選択
-					exit;
 				case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
 				case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過
 					throw new RuntimeException("ファイルサイズが大きすぎます");
