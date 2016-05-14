@@ -197,7 +197,7 @@ class userRelated {
 			$permissions = ['email']; // optional
 			$loginUrl = $helper->getLoginUrl(FULLWEBPATH . '/' . USER_PLUGIN_FOLDER . '/userRelated/login-callback.php', $permissions);
 
-			echo '<a href="' . $loginUrl . '">Log in with Facebook</a>';
+			return $loginUrl;
 		}
 	}
 	static function facebook($accessToken) {
@@ -216,11 +216,11 @@ class userRelated {
 				  $plainOldArray = $response->getDecodedBody();
 				} catch(Facebook\Exceptions\FacebookResponseException $e) {
 				  // When Graph returns an error
-				  echo 'Graph returned an error: ' . $e->getMessage();
+				  debugLog('Graph returned an error: ' . $e->getMessage());
 				  exit;
 				} catch(Facebook\Exceptions\FacebookSDKException $e) {
 				  // When validation fails or other local issues
-				  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+				  debugLog('Facebook SDK returned an error: ' . $e->getMessage());
 				  exit;
 				}
 

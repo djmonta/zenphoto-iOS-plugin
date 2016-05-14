@@ -10,19 +10,6 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/zp-core/admin-globals.php')
 global $_zp_current_admin_obj;
 
 admin_securityChecks(NULL, currentRelativeURL());
-$admins = $_zp_authority->getAdministrators('all');
-
-$ordered = array();
-foreach ($admins as $key => $admin) {
-	if ($admin['valid']) {
-		$ordered[$key] = $admin['date'];
-	}
-}
-asort($ordered);
-$adminordered = array();
-foreach ($ordered as $key => $user) {
-	$adminordered[] = $admins[$key];
-}
 
 $userobj = $_zp_current_admin_obj;
 
@@ -58,9 +45,18 @@ if (isset($_GET['action'])) {
 				$userobj->save();
 			}
 		}
-		header("Location: " . FULLWEBPATH . "/" . USER_PLUGIN_FOLDER . '/userRelated/userRelatedTab.php?page=users&tab=profile&applied=' . $msg);
-		exitZP();
+	} elseif ($action == 'fb_disconnect') {
+		if ($userobj->getValid()) {
+			$newdata = NULL;
+			$userobj->set('fb_id', $newdata);
+			unset($_SESSION['facebook_access_token']);
+			$updated = true;
+			zp_apply_filter('save_admin_custom_data', $updated, $userobj, $i, $updated);
+			$userobj->save();
+		}
 	}
+	header("Location: " . FULLWEBPATH . "/" . USER_PLUGIN_FOLDER . '/userRelated/userRelatedTab.php?page=users&tab=profile&applied=' . $msg);
+	exitZP();
 }
 
 function saveImage($file) {
@@ -165,6 +161,7 @@ echo '</head>' . "\n";
 			$subtab = printSubtabs();
 			?>
 			<div id="tab_users" class="tabbox">
+				<p><?php echo gettext("Edit your profile."); ?>
 				<form action="?action=profile" class="dirty-check" method="post" autocomplete="off" enctype="multipart/form-data">
 					<?php XSRFToken('profile'); ?>
 					<span class="buttons">
@@ -172,19 +169,39 @@ echo '</head>' . "\n";
 						<button type="reset"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/reset.png" alt="" /><strong><?php echo gettext("Reset"); ?></strong></button>
 					</span>
 					<br class="clearall" />
-					<label for="profile_picture_url">Profile Picture</label>
-					<br class="clearall" />
-					<input type="file" size="40" name="profile_picture_url" id="profile_picture_url"/>
-					<?php if ($userobj->get('profile_picture_url')) { ?>
-						<img src="<?php echo html_encode($userobj->get('profile_picture_url')); ?>" style="width: 120px; height: auto;" />
-					<?php } ?>
-					<br class="clearall" />
-					<?php userRelated::facebookLoginUrl(); ?>
-					<p class="buttons">
-						<button type="submit"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/pass.png" alt="" /><strong><?php echo gettext("Apply"); ?></strong></button>
-						<button type="reset"><img src="<?php echo FULLWEBPATH . "/" . ZENFOLDER; ?>/images/reset.png" alt="" /><strong><?php echo gettext("Reset"); ?></strong></button>
-					</p>
+					<table class="bordered">
+						<tr>
+							<td>Profile Picture</td>
+							<td>
+								<input type="file" size="40" name="profile_picture_url" id="profile_picture_url"/>
+								<?php if ($userobj->get('profile_picture_url')) { ?>
+									<img src="<?php echo html_encode($userobj->get('profile_picture_url')); ?>" style="width: 120px; height: auto;" />
+								<?php } ?>
+							</td>
+						</tr>
+					</table>
 				</form>
+				<?php if(getOption('fb_integration')) { ?>
+					<form action="?action=fb_disconnect" class="dirty-check" method="post" autocomplete="off">
+					 <?php XSRFToken('fb_disconnect'); ?>
+						<table class="bordered">
+							<tr>
+								<td>Facebook Setting</td>
+								<td>
+									<?php
+									$loginUrl = userRelated::facebookLoginUrl();
+									echo '<a href="' . $loginUrl . '">Connect with Facebook</a>';
+									if ($_SESSION['facebook_access_token']) {
+										$plainOldArray = userRelated::facebook($_SESSION['facebook_access_token']);
+										echo 'Logged in as ' . $plainOldArray['name'];
+									?>
+									<button type="submit">Disonnect</button>
+									<?php } ?>
+								</td>
+							</tr>
+						</table>
+					</form>
+				<?php } ?>
 				<br class="clearall" />
 			</div>
 
