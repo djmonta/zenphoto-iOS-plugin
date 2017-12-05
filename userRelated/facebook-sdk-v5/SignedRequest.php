@@ -19,16 +19,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook;
 
 use Facebook\Exceptions\FacebookSDKException;
 
 /**
- * Class SignedRequest
- *
- * @package Facebook
+ * Class SignedRequest.
  */
 class SignedRequest
 {
@@ -116,7 +114,7 @@ class SignedRequest
     /**
      * Checks for OAuth data in the payload.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasOAuthData()
     {
@@ -139,7 +137,7 @@ class SignedRequest
         $hashedSig = $this->hashSignature($encodedPayload);
         $encodedSig = $this->base64UrlEncode($hashedSig);
 
-        return $encodedSig . '.' . $encodedPayload;
+        return $encodedSig.'.'.$encodedPayload;
     }
 
     /**
@@ -238,9 +236,9 @@ class SignedRequest
      *
      * @param string $encodedData
      *
-     * @return string
-     *
      * @throws FacebookSDKException
+     *
+     * @return string
      */
     protected function hashSignature($encodedData)
     {
@@ -284,7 +282,7 @@ class SignedRequest
     /**
      * Base64 decoding which replaces characters:
      *   + instead of -
-     *   / instead of _
+     *   / instead of _.
      *
      * @link http://en.wikipedia.org/wiki/Base64#URL_applications
      *
@@ -303,7 +301,7 @@ class SignedRequest
     /**
      * Base64 encoding which replaces characters:
      *   + instead of -
-     *   / instead of _
+     *   / instead of _.
      *
      * @link http://en.wikipedia.org/wiki/Base64#URL_applications
      *

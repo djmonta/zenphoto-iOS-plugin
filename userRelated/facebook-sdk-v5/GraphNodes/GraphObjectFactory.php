@@ -19,16 +19,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphObjectFactory
+ * Class GraphObjectFactory.
  *
- * @package Facebook
  *
  * @deprecated 5.0.0 GraphObjectFactory has been renamed to GraphNodeFactory
+ *
  * @todo v6: Remove this class
  */
 class GraphObjectFactory extends GraphNodeFactory
@@ -56,24 +56,24 @@ class GraphObjectFactory extends GraphNodeFactory
     {
         return $this->makeGraphNode($subclassName);
     }
-    
+
     /**
      * Convenience method for creating a GraphEvent collection.
      *
-     * @return GraphEvent
-     *
      * @throws FacebookSDKException
+     *
+     * @return GraphEvent
      */
     public function makeGraphEvent()
     {
-        return $this->makeGraphObject(static::BASE_GRAPH_OBJECT_PREFIX . 'GraphEvent');
+        return $this->makeGraphObject(static::BASE_GRAPH_OBJECT_PREFIX.'GraphEvent');
     }
 
     /**
      * Tries to convert a FacebookResponse entity into a GraphEdge.
      *
      * @param string|null $subclassName The GraphNode sub class to cast the list items to.
-     * @param boolean     $auto_prefix  Toggle to auto-prefix the subclass name.
+     * @param bool        $auto_prefix  Toggle to auto-prefix the subclass name.
      *
      * @return GraphEdge
      *

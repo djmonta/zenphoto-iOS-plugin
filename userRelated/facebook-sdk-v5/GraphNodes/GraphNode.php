@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphNode
- *
- * @package Facebook
+ * Class GraphNode.
  */
 class GraphNode extends Collection
 {
@@ -110,7 +108,7 @@ class GraphNode extends Collection
      *
      * @param string $string
      *
-     * @return boolean
+     * @return bool
      *
      * @see https://developers.facebook.com/docs/graph-api/using-graph-api/#readmodifiers
      * @see http://www.cl.cam.ac.uk/~mgk25/iso-time.html
@@ -123,11 +121,11 @@ class GraphNode extends Collection
         // ...and I'm all like:
         // http://thecodinglove.com/post/95378251969/when-code-works-and-i-dont-know-why
         $crazyInsaneRegexThatSomehowDetectsIso8601 = '/^([\+-]?\d{4}(?!\d{2}\b))'
-            . '((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?'
-            . '|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d'
-            . '|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])'
-            . '((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d'
-            . '([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/';
+            .'((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?'
+            .'|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d'
+            .'|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])'
+            .'((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d'
+            .'([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/';
 
         return preg_match($crazyInsaneRegexThatSomehowDetectsIso8601, $string) === 1;
     }
@@ -137,7 +135,7 @@ class GraphNode extends Collection
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function shouldCastAsDateTime($key)
     {
@@ -150,7 +148,7 @@ class GraphNode extends Collection
             'issued_at',
             'expires_at',
             'birthday',
-            'publish_time'
+            'publish_time',
         ], true);
     }
 

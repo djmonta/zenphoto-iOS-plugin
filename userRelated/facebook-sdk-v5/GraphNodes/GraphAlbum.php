@@ -19,23 +19,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphAlbum
- *
- * @package Facebook
+ * Class GraphAlbum.
  */
-
 class GraphAlbum extends GraphNode
 {
     /**
      * @var array Maps object key names to Graph object types.
      */
     protected static $graphObjectMap = [
-        'from' => '\Facebook\GraphNodes\GraphUser',
+        'from'  => '\Facebook\GraphNodes\GraphUser',
         'place' => '\Facebook\GraphNodes\GraphPage',
     ];
 
@@ -52,7 +49,7 @@ class GraphAlbum extends GraphNode
     /**
      * Returns whether the viewer can upload photos to this album.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function getCanUpload()
     {

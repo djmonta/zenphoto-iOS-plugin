@@ -19,11 +19,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
-/**
+/*
  * Class Collection
  *
  * Modified version of Collection in "illuminate/support" by Taylor Otwell
@@ -81,6 +81,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * @return mixed
      *
      * @deprecated 5.0.0 getProperty() has been renamed to getField()
+     *
      * @todo v6: Remove this method
      */
     public function getProperty($name, $default = null)
@@ -104,6 +105,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      * @return array
      *
      * @deprecated 5.0.0 getPropertyNames() has been renamed to getFieldNames()
+     *
      * @todo v6: Remove this method
      */
     public function getPropertyNames()

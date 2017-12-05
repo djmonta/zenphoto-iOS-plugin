@@ -19,18 +19,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FacebookRequest;
 use Facebook\Url\FacebookUrlManipulator;
-use Facebook\Exceptions\FacebookSDKException;
 
 /**
- * Class GraphEdge
- *
- * @package Facebook
+ * Class GraphEdge.
  */
 class GraphEdge extends Collection
 {
@@ -135,8 +133,6 @@ class GraphEdge extends Collection
         if (isset($this->metaData['paging']['cursors'][$direction])) {
             return $this->metaData['paging']['cursors'][$direction];
         }
-
-        return null;
     }
 
     /**
@@ -144,9 +140,9 @@ class GraphEdge extends Collection
      *
      * @param string $direction The direction of the page: next|previous
      *
-     * @return string|null
-     *
      * @throws FacebookSDKException
+     *
+     * @return string|null
      */
     public function getPaginationUrl($direction)
     {
@@ -165,17 +161,17 @@ class GraphEdge extends Collection
         $cursorDirection = $direction === 'next' ? 'after' : 'before';
         $cursor = $this->getCursor($cursorDirection);
         if (!$cursor) {
-            return null;
+            return;
         }
 
         // If we don't know the ID of the parent node, this ain't gonna work.
         if (!$this->parentEdgeEndpoint) {
-            return null;
+            return;
         }
 
         // We have the parent node ID, paging cursor & original request.
         // These were the ingredients chosen to create the perfect little URL.
-        $pageUrl = $this->parentEdgeEndpoint . '?' . $cursorDirection . '=' . urlencode($cursor);
+        $pageUrl = $this->parentEdgeEndpoint.'?'.$cursorDirection.'='.urlencode($cursor);
 
         // Pull in the original params
         $originalUrl = $this->request->getUrl();
@@ -201,15 +197,15 @@ class GraphEdge extends Collection
      *
      * @param string $direction The direction of the page: next|previous
      *
-     * @return FacebookRequest|null
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest|null
      */
     public function getPaginationRequest($direction)
     {
         $pageUrl = $this->getPaginationUrl($direction);
         if (!$pageUrl) {
-            return null;
+            return;
         }
 
         $newRequest = clone $this->request;
@@ -221,9 +217,9 @@ class GraphEdge extends Collection
     /**
      * Gets the request object needed to make a "next" page request.
      *
-     * @return FacebookRequest|null
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest|null
      */
     public function getNextPageRequest()
     {
@@ -233,9 +229,9 @@ class GraphEdge extends Collection
     /**
      * Gets the request object needed to make a "previous" page request.
      *
-     * @return FacebookRequest|null
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest|null
      */
     public function getPreviousPageRequest()
     {
@@ -254,7 +250,5 @@ class GraphEdge extends Collection
         if (isset($this->metaData['summary']['total_count'])) {
             return $this->metaData['summary']['total_count'];
         }
-
-        return null;
     }
 }

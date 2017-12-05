@@ -19,17 +19,15 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Helpers;
 
 use Facebook\FacebookApp;
 use Facebook\FacebookClient;
 
 /**
- * Class FacebookPageTabHelper
- *
- * @package Facebook
+ * Class FacebookPageTabHelper.
  */
 class FacebookPageTabHelper extends FacebookCanvasHelper
 {
@@ -76,7 +74,7 @@ class FacebookPageTabHelper extends FacebookCanvasHelper
     /**
      * Returns true if the user is an admin.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin()
     {

@@ -19,18 +19,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook;
 
+use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
-use ArrayAccess;
 
 /**
- * Class FacebookBatchResponse
- *
- * @package Facebook
+ * Class FacebookBatchResponse.
  */
 class FacebookBatchResponse extends FacebookResponse implements IteratorAggregate, ArrayAccess
 {
@@ -113,7 +111,7 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -121,7 +119,7 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -129,7 +127,7 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -137,7 +135,7 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
@@ -145,7 +143,7 @@ class FacebookBatchResponse extends FacebookResponse implements IteratorAggregat
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {

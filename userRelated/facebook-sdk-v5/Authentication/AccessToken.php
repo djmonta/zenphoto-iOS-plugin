@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Authentication;
 
 /**
- * Class AccessToken
- *
- * @package Facebook
+ * Class AccessToken.
  */
 class AccessToken
 {
@@ -111,7 +109,7 @@ class AccessToken
     /**
      * Checks the expiration of the access token.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function isExpired()
     {
@@ -122,8 +120,6 @@ class AccessToken
         if ($this->isAppAccessToken()) {
             return false;
         }
-
-        return null;
     }
 
     /**

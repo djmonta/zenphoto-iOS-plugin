@@ -19,22 +19,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Authentication;
 
-use Facebook\Facebook;
-use Facebook\FacebookApp;
-use Facebook\FacebookRequest;
-use Facebook\FacebookResponse;
-use Facebook\FacebookClient;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Facebook;
+use Facebook\FacebookApp;
+use Facebook\FacebookClient;
+use Facebook\FacebookRequest;
+use Facebook\FacebookResponse;
 
 /**
- * Class OAuth2Client
- *
- * @package Facebook
+ * Class OAuth2Client.
  */
 class OAuth2Client
 {
@@ -135,15 +133,15 @@ class OAuth2Client
     public function getAuthorizationUrl($redirectUrl, $state, array $scope = [], array $params = [], $separator = '&')
     {
         $params += [
-            'client_id' => $this->app->getId(),
-            'state' => $state,
+            'client_id'     => $this->app->getId(),
+            'state'         => $state,
             'response_type' => 'code',
-            'sdk' => 'php-sdk-' . Facebook::VERSION,
-            'redirect_uri' => $redirectUrl,
-            'scope' => implode(',', $scope)
+            'sdk'           => 'php-sdk-'.Facebook::VERSION,
+            'redirect_uri'  => $redirectUrl,
+            'scope'         => implode(',', $scope),
         ];
 
-        return static::BASE_AUTHORIZATION_URL . '/' . $this->graphVersion . '/dialog/oauth?' . http_build_query($params, null, $separator);
+        return static::BASE_AUTHORIZATION_URL.'/'.$this->graphVersion.'/dialog/oauth?'.http_build_query($params, null, $separator);
     }
 
     /**
@@ -152,14 +150,14 @@ class OAuth2Client
      * @param string $code
      * @param string $redirectUri
      *
-     * @return AccessToken
-     *
      * @throws FacebookSDKException
+     *
+     * @return AccessToken
      */
     public function getAccessTokenFromCode($code, $redirectUri = '')
     {
         $params = [
-            'code' => $code,
+            'code'         => $code,
             'redirect_uri' => $redirectUri,
         ];
 
@@ -171,15 +169,15 @@ class OAuth2Client
      *
      * @param AccessToken|string $accessToken
      *
-     * @return AccessToken
-     *
      * @throws FacebookSDKException
+     *
+     * @return AccessToken
      */
     public function getLongLivedAccessToken($accessToken)
     {
         $accessToken = $accessToken instanceof AccessToken ? $accessToken->getValue() : $accessToken;
         $params = [
-            'grant_type' => 'fb_exchange_token',
+            'grant_type'        => 'fb_exchange_token',
             'fb_exchange_token' => $accessToken,
         ];
 
@@ -192,9 +190,9 @@ class OAuth2Client
      * @param AccessToken|string $accessToken
      * @param string             $redirectUri
      *
-     * @return AccessToken
-     *
      * @throws FacebookSDKException
+     *
+     * @return AccessToken
      */
     public function getCodeFromLongLivedAccessToken($accessToken, $redirectUri = '')
     {
@@ -217,9 +215,9 @@ class OAuth2Client
      *
      * @param array $params
      *
-     * @return AccessToken
-     *
      * @throws FacebookSDKException
+     *
+     * @return AccessToken
      */
     protected function requestAnAccessToken(array $params)
     {
@@ -254,9 +252,9 @@ class OAuth2Client
      * @param array       $params
      * @param string|null $accessToken
      *
-     * @return FacebookResponse
-     *
      * @throws FacebookResponseException
+     *
+     * @return FacebookResponse
      */
     protected function sendRequestWithClientParams($endpoint, array $params, $accessToken = null)
     {
@@ -285,7 +283,7 @@ class OAuth2Client
     protected function getClientParams()
     {
         return [
-            'client_id' => $this->app->getId(),
+            'client_id'     => $this->app->getId(),
             'client_secret' => $this->app->getSecret(),
         ];
     }

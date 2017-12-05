@@ -19,12 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\HttpClients;
 
-use Facebook\Http\GraphRawResponse;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Http\GraphRawResponse;
 
 class FacebookStreamHttpClient implements FacebookHttpClientInterface
 {
@@ -42,23 +42,23 @@ class FacebookStreamHttpClient implements FacebookHttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function send($url, $method, $body, array $headers, $timeOut)
     {
         $options = [
             'http' => [
-                'method' => $method,
-                'header' => $this->compileHeader($headers),
-                'content' => $body,
-                'timeout' => $timeOut,
-                'ignore_errors' => true
+                'method'        => $method,
+                'header'        => $this->compileHeader($headers),
+                'content'       => $body,
+                'timeout'       => $timeOut,
+                'ignore_errors' => true,
             ],
             'ssl' => [
-                'verify_peer' => true,
-                'verify_peer_name' => true,
+                'verify_peer'       => true,
+                'verify_peer_name'  => true,
                 'allow_self_signed' => true, // All root certificates are self-signed
-                'cafile' => __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem',
+                'cafile'            => __DIR__.'/certs/DigiCertHighAssuranceEVRootCA.pem',
             ],
         ];
 
@@ -86,7 +86,7 @@ class FacebookStreamHttpClient implements FacebookHttpClientInterface
     {
         $header = [];
         foreach ($headers as $k => $v) {
-            $header[] = $k . ': ' . $v;
+            $header[] = $k.': '.$v;
         }
 
         return implode("\r\n", $header);

@@ -19,15 +19,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\PseudoRandomString;
 
 use Facebook\Exceptions\FacebookSDKException;
 
 class UrandomPseudoRandomStringGenerator implements PseudoRandomStringGeneratorInterface
 {
-
     use PseudoRandomStringGeneratorTrait;
 
     /**
@@ -42,21 +41,21 @@ class UrandomPseudoRandomStringGenerator implements PseudoRandomStringGeneratorI
     {
         if (ini_get('open_basedir')) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'There is an open_basedir constraint that prevents access to /dev/urandom.'
             );
         }
 
         if (!is_readable('/dev/urandom')) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'Unable to read from /dev/urandom.'
             );
         }
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPseudoRandomString($length)
     {
@@ -65,7 +64,7 @@ class UrandomPseudoRandomStringGenerator implements PseudoRandomStringGeneratorI
         $stream = fopen('/dev/urandom', 'rb');
         if (!is_resource($stream)) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'Unable to open stream to /dev/urandom.'
             );
         }
@@ -79,7 +78,7 @@ class UrandomPseudoRandomStringGenerator implements PseudoRandomStringGeneratorI
 
         if (!$binaryString) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'Stream to /dev/urandom returned no data.'
             );
         }
