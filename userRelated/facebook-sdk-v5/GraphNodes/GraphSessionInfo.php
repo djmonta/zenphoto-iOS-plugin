@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphSessionInfo
- *
- * @package Facebook
+ * Class GraphSessionInfo.
  */
 class GraphSessionInfo extends GraphNode
 {
@@ -63,7 +61,7 @@ class GraphSessionInfo extends GraphNode
     /**
      * Returns whether the token is valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsValid()
     {

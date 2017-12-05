@@ -19,18 +19,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Http;
 
 use Facebook\FileUpload\FacebookFile;
 
 /**
- * Class RequestBodyMultipartt
+ * Class RequestBodyMultipartt.
  *
  * Some things copied from Guzzle
  *
- * @package Facebook
  *
  * @see https://github.com/guzzle/guzzle/blob/master/src/Post/MultipartBody.php
  */
@@ -64,7 +63,7 @@ class RequestBodyMultipart implements RequestBodyInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBody()
     {
@@ -88,7 +87,7 @@ class RequestBodyMultipart implements RequestBodyInterface
     }
 
     /**
-     * Get the boundary
+     * Get the boundary.
      *
      * @return string
      */

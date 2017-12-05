@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\HttpClients;
 
 /**
- * Interface FacebookHttpClientInterface
- *
- * @package Facebook
+ * Interface FacebookHttpClientInterface.
  */
 interface FacebookHttpClientInterface
 {
@@ -39,9 +37,9 @@ interface FacebookHttpClientInterface
      * @param array  $headers The request headers.
      * @param int    $timeOut The timeout in seconds for the request.
      *
-     * @return \Facebook\Http\GraphRawResponse Raw response from the server.
-     *
      * @throws \Facebook\Exceptions\FacebookSDKException
+     *
+     * @return \Facebook\Http\GraphRawResponse Raw response from the server.
      */
     public function send($url, $method, $body, array $headers, $timeOut);
 }

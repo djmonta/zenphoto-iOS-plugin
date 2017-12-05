@@ -19,27 +19,25 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Helpers;
 
 use Facebook\Authentication\AccessToken;
 use Facebook\Authentication\OAuth2Client;
-use Facebook\Url\UrlDetectionInterface;
-use Facebook\Url\FacebookUrlDetectionHandler;
-use Facebook\Url\FacebookUrlManipulator;
-use Facebook\PersistentData\PersistentDataInterface;
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\PersistentData\FacebookSessionPersistentDataHandler;
-use Facebook\PseudoRandomString\PseudoRandomStringGeneratorInterface;
+use Facebook\PersistentData\PersistentDataInterface;
 use Facebook\PseudoRandomString\McryptPseudoRandomStringGenerator;
 use Facebook\PseudoRandomString\OpenSslPseudoRandomStringGenerator;
+use Facebook\PseudoRandomString\PseudoRandomStringGeneratorInterface;
 use Facebook\PseudoRandomString\UrandomPseudoRandomStringGenerator;
-use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Url\FacebookUrlDetectionHandler;
+use Facebook\Url\FacebookUrlManipulator;
+use Facebook\Url\UrlDetectionInterface;
 
 /**
- * Class FacebookRedirectLoginHelper
- *
- * @package Facebook
+ * Class FacebookRedirectLoginHelper.
  */
 class FacebookRedirectLoginHelper
 {
@@ -115,9 +113,9 @@ class FacebookRedirectLoginHelper
     /**
      * Detects which pseudo-random string generator to use.
      *
-     * @return PseudoRandomStringGeneratorInterface
-     *
      * @throws FacebookSDKException
+     *
+     * @return PseudoRandomStringGeneratorInterface
      */
     public function detectPseudoRandomStringGenerator()
     {
@@ -177,9 +175,9 @@ class FacebookRedirectLoginHelper
      * @param string             $next        The url Facebook should redirect the user to after a successful logout.
      * @param string             $separator   The separator to use in http_build_query().
      *
-     * @return string
-     *
      * @throws FacebookSDKException
+     *
+     * @return string
      */
     public function getLogoutUrl($accessToken, $next, $separator = '&')
     {
@@ -192,11 +190,11 @@ class FacebookRedirectLoginHelper
         }
 
         $params = [
-            'next' => $next,
+            'next'         => $next,
             'access_token' => $accessToken->getValue(),
         ];
 
-        return 'https://www.facebook.com/logout.php?' . http_build_query($params, null, $separator);
+        return 'https://www.facebook.com/logout.php?'.http_build_query($params, null, $separator);
     }
 
     /**
@@ -236,14 +234,14 @@ class FacebookRedirectLoginHelper
      *
      * @param string|null $redirectUrl The redirect URL.
      *
-     * @return AccessToken|null
-     *
      * @throws FacebookSDKException
+     *
+     * @return AccessToken|null
      */
     public function getAccessToken($redirectUrl = null)
     {
         if (!$code = $this->getCode()) {
-            return null;
+            return;
         }
 
         $this->validateCsrf();

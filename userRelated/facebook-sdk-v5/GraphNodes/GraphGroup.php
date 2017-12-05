@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphGroup
- *
- * @package Facebook
+ * Class GraphGroup.
  */
 class GraphGroup extends GraphNode
 {
@@ -167,5 +165,4 @@ class GraphGroup extends GraphNode
     {
         return $this->getField('venue');
     }
-
 }

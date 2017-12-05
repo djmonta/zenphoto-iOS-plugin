@@ -19,18 +19,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Authentication;
 
 use Facebook\Exceptions\FacebookSDKException;
 
 /**
- * Class AccessTokenMetadata
+ * Class AccessTokenMetadata.
  *
  * Represents metadata from an access token.
  *
- * @package Facebook
  * @see     https://developers.facebook.com/docs/graph-api/reference/debug_token
  */
 class AccessTokenMetadata
@@ -91,6 +90,7 @@ class AccessTokenMetadata
      * @return mixed
      *
      * @deprecated 5.0.0 getProperty() has been renamed to getField()
+     *
      * @todo v6: Remove this method
      */
     public function getProperty($field, $default = null)
@@ -134,7 +134,7 @@ class AccessTokenMetadata
     }
 
     /**
-     * Returns a value from the "metadata" metadata. *Brain explodes*
+     * Returns a value from the "metadata" metadata. *Brain explodes*.
      *
      * @param string $field   The property to retrieve.
      * @param mixed  $default The default to return if the property doesn't exist.
@@ -220,7 +220,7 @@ class AccessTokenMetadata
     /**
      * Whether the access token is still valid or not.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function getIsValid()
     {

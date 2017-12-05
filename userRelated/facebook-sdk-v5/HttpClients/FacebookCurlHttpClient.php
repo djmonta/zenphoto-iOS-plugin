@@ -19,17 +19,15 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\HttpClients;
 
-use Facebook\Http\GraphRawResponse;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Http\GraphRawResponse;
 
 /**
- * Class FacebookCurlHttpClient
- *
- * @package Facebook
+ * Class FacebookCurlHttpClient.
  */
 class FacebookCurlHttpClient implements FacebookHttpClientInterface
 {
@@ -44,7 +42,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     protected $curlErrorCode = 0;
 
     /**
-     * @var string|boolean The raw response from the server
+     * @var string|bool The raw response from the server
      */
     protected $rawResponse;
 
@@ -72,7 +70,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function send($url, $method, $body, array $headers, $timeOut)
     {
@@ -103,19 +101,19 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     public function openConnection($url, $method, $body, array $headers, $timeOut)
     {
         $options = [
-            CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_HTTPHEADER => $this->compileRequestHeaders($headers),
-            CURLOPT_URL => $url,
+            CURLOPT_CUSTOMREQUEST  => $method,
+            CURLOPT_HTTPHEADER     => $this->compileRequestHeaders($headers),
+            CURLOPT_URL            => $url,
             CURLOPT_CONNECTTIMEOUT => 10,
-            CURLOPT_TIMEOUT => $timeOut,
+            CURLOPT_TIMEOUT        => $timeOut,
             CURLOPT_RETURNTRANSFER => true, // Follow 301 redirects
-            CURLOPT_HEADER => true, // Enable header processing
+            CURLOPT_HEADER         => true, // Enable header processing
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_CAINFO => __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem',
+            CURLOPT_CAINFO         => __DIR__.'/certs/DigiCertHighAssuranceEVRootCA.pem',
         ];
 
-        if ($method !== "GET") {
+        if ($method !== 'GET') {
             $options[CURLOPT_POSTFIELDS] = $body;
         }
 
@@ -124,7 +122,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     }
 
     /**
-     * Closes an existing curl connection
+     * Closes an existing curl connection.
      */
     public function closeConnection()
     {
@@ -132,7 +130,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     }
 
     /**
-     * Send the request and get the raw response from curl
+     * Send the request and get the raw response from curl.
      */
     public function sendRequest()
     {
@@ -151,14 +149,14 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
         $return = [];
 
         foreach ($headers as $key => $value) {
-            $return[] = $key . ': ' . $value;
+            $return[] = $key.': '.$value;
         }
 
         return $return;
     }
 
     /**
-     * Extracts the headers and the body into a two-part array
+     * Extracts the headers and the body into a two-part array.
      *
      * @return array
      */
@@ -173,9 +171,9 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
     }
 
     /**
-     * Return proper header size
+     * Return proper header size.
      *
-     * @return integer
+     * @return int
      */
     private function getHeaderSize()
     {
@@ -198,7 +196,7 @@ class FacebookCurlHttpClient implements FacebookHttpClientInterface
      * Detect versions of Curl which report incorrect header lengths when
      * using Proxies.
      *
-     * @return boolean
+     * @return bool
      */
     private function needsCurlProxyFix()
     {

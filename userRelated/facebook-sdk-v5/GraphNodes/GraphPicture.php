@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphPicture
- *
- * @package Facebook
+ * Class GraphPicture.
  */
 class GraphPicture extends GraphNode
 {
@@ -41,7 +39,7 @@ class GraphPicture extends GraphNode
     }
 
     /**
-     * Returns the url of user picture if it exists
+     * Returns the url of user picture if it exists.
      *
      * @return string|null
      */
@@ -51,7 +49,7 @@ class GraphPicture extends GraphNode
     }
 
     /**
-     * Returns the width of user picture if it exists
+     * Returns the width of user picture if it exists.
      *
      * @return int|null
      */
@@ -61,7 +59,7 @@ class GraphPicture extends GraphNode
     }
 
     /**
-     * Returns the height of user picture if it exists
+     * Returns the height of user picture if it exists.
      *
      * @return int|null
      */

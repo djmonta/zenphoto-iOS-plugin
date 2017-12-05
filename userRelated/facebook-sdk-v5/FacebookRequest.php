@@ -19,22 +19,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook;
 
 use Facebook\Authentication\AccessToken;
-use Facebook\Url\FacebookUrlManipulator;
+use Facebook\Exceptions\FacebookSDKException;
 use Facebook\FileUpload\FacebookFile;
 use Facebook\FileUpload\FacebookVideo;
 use Facebook\Http\RequestBodyMultipart;
 use Facebook\Http\RequestBodyUrlEncoded;
-use Facebook\Exceptions\FacebookSDKException;
+use Facebook\Url\FacebookUrlManipulator;
 
 /**
- * Class Request
- *
- * @package Facebook
+ * Class Request.
  */
 class FacebookRequest
 {
@@ -127,9 +125,9 @@ class FacebookRequest
      *
      * @param string $accessToken The access token.
      *
-     * @return FacebookRequest
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest
      */
     public function setAccessTokenFromParams($accessToken)
     {
@@ -191,7 +189,7 @@ class FacebookRequest
     public function getAppSecretProof()
     {
         if (!$accessTokenEntity = $this->getAccessTokenEntity()) {
-            return null;
+            return;
         }
 
         return $accessTokenEntity->getAppSecretProof($this->app->getSecret());
@@ -253,9 +251,9 @@ class FacebookRequest
      *
      * @param string
      *
-     * @return FacebookRequest
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest
      */
     public function setEndpoint($endpoint)
     {
@@ -324,9 +322,9 @@ class FacebookRequest
      *
      * @param array $params
      *
-     * @return FacebookRequest
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookRequest
      */
     public function setParams(array $params = [])
     {
@@ -410,7 +408,7 @@ class FacebookRequest
     /**
      * Let's us know if there is a file upload with this request.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsFileUploads()
     {
@@ -420,7 +418,7 @@ class FacebookRequest
     /**
      * Let's us know if there is a video upload with this request.
      *
-     * @return boolean
+     * @return bool
      */
     public function containsVideoUploads()
     {
@@ -511,7 +509,7 @@ class FacebookRequest
         $graphVersion = FacebookUrlManipulator::forceSlashPrefix($this->graphVersion);
         $endpoint = FacebookUrlManipulator::forceSlashPrefix($this->getEndpoint());
 
-        $url = $graphVersion . $endpoint;
+        $url = $graphVersion.$endpoint;
 
         if ($this->getMethod() !== 'POST') {
             $params = $this->getParams();
@@ -529,7 +527,7 @@ class FacebookRequest
     public static function getDefaultHeaders()
     {
         return [
-            'User-Agent' => 'fb-php-' . Facebook::VERSION,
+            'User-Agent'      => 'fb-php-'.Facebook::VERSION,
             'Accept-Encoding' => '*',
         ];
     }

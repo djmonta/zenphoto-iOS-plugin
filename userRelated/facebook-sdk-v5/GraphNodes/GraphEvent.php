@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphEvent
- *
- * @package Facebook
+ * Class GraphEvent.
  */
 class GraphEvent extends GraphNode
 {
@@ -34,9 +32,9 @@ class GraphEvent extends GraphNode
      * @var array Maps object key names to GraphNode types.
      */
     protected static $graphObjectMap = [
-        'cover' => '\Facebook\GraphNodes\GraphCoverPhoto',
-        'place' => '\Facebook\GraphNodes\GraphPage',
-        'picture' => '\Facebook\GraphNodes\GraphPicture',
+        'cover'        => '\Facebook\GraphNodes\GraphCoverPhoto',
+        'place'        => '\Facebook\GraphNodes\GraphPage',
+        'picture'      => '\Facebook\GraphNodes\GraphPicture',
         'parent_group' => '\Facebook\GraphNodes\GraphGroup',
     ];
 

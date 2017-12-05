@@ -19,21 +19,19 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Helpers;
 
+use Facebook\Authentication\AccessToken;
+use Facebook\Authentication\OAuth2Client;
 use Facebook\Facebook;
 use Facebook\FacebookApp;
 use Facebook\FacebookClient;
 use Facebook\SignedRequest;
-use Facebook\Authentication\AccessToken;
-use Facebook\Authentication\OAuth2Client;
 
 /**
- * Class FacebookSignedRequestFromInputHelper
- *
- * @package Facebook
+ * Class FacebookSignedRequestFromInputHelper.
  */
 abstract class FacebookSignedRequestFromInputHelper
 {
@@ -87,9 +85,9 @@ abstract class FacebookSignedRequestFromInputHelper
     /**
      * Returns an AccessToken entity from the signed request.
      *
-     * @return AccessToken|null
-     *
      * @throws \Facebook\Exceptions\FacebookSDKException
+     *
+     * @return AccessToken|null
      */
     public function getAccessToken()
     {
@@ -105,8 +103,6 @@ abstract class FacebookSignedRequestFromInputHelper
 
             return new AccessToken($accessToken, $expiresAt);
         }
-
-        return null;
     }
 
     /**
@@ -146,8 +142,6 @@ abstract class FacebookSignedRequestFromInputHelper
         if (isset($_POST['signed_request'])) {
             return $_POST['signed_request'];
         }
-
-        return null;
     }
 
     /**
@@ -157,10 +151,8 @@ abstract class FacebookSignedRequestFromInputHelper
      */
     public function getRawSignedRequestFromCookie()
     {
-        if (isset($_COOKIE['fbsr_' . $this->app->getId()])) {
-            return $_COOKIE['fbsr_' . $this->app->getId()];
+        if (isset($_COOKIE['fbsr_'.$this->app->getId()])) {
+            return $_COOKIE['fbsr_'.$this->app->getId()];
         }
-
-        return null;
     }
 }

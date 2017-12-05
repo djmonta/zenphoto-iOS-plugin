@@ -19,8 +19,8 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\PseudoRandomString;
 
 use Facebook\Exceptions\FacebookSDKException;
@@ -41,14 +41,14 @@ class McryptPseudoRandomStringGenerator implements PseudoRandomStringGeneratorIn
     {
         if (!function_exists('mcrypt_create_iv')) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'The function mcrypt_create_iv() does not exist.'
             );
         }
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPseudoRandomString($length)
     {
@@ -58,7 +58,7 @@ class McryptPseudoRandomStringGenerator implements PseudoRandomStringGeneratorIn
 
         if ($binaryString === false) {
             throw new FacebookSDKException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'mcrypt_create_iv() returned an error.'
             );
         }

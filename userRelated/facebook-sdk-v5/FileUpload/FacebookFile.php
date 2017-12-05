@@ -19,16 +19,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\FileUpload;
 
 use Facebook\Exceptions\FacebookSDKException;
 
 /**
- * Class FacebookFile
- *
- * @package Facebook
+ * Class FacebookFile.
  */
 class FacebookFile
 {
@@ -71,13 +69,13 @@ class FacebookFile
     public function open()
     {
         if (!$this->isRemoteFile($this->path) && !is_readable($this->path)) {
-            throw new FacebookSDKException('Failed to create FacebookFile entity. Unable to read resource: ' . $this->path . '.');
+            throw new FacebookSDKException('Failed to create FacebookFile entity. Unable to read resource: '.$this->path.'.');
         }
 
         $this->stream = fopen($this->path, 'r');
 
         if (!$this->stream) {
-            throw new FacebookSDKException('Failed to create FacebookFile entity. Unable to open resource: ' . $this->path . '.');
+            throw new FacebookSDKException('Failed to create FacebookFile entity. Unable to open resource: '.$this->path.'.');
         }
     }
 
@@ -126,7 +124,7 @@ class FacebookFile
      *
      * @param string $pathToFile
      *
-     * @return boolean
+     * @return bool
      */
     protected function isRemoteFile($pathToFile)
     {

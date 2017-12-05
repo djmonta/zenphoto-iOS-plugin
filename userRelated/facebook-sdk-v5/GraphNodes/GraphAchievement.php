@@ -19,23 +19,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\GraphNodes;
 
 /**
- * Class GraphAchievement
- *
- * @package Facebook
+ * Class GraphAchievement.
  */
-
 class GraphAchievement extends GraphNode
 {
     /**
      * @var array Maps object key names to Graph object types.
      */
     protected static $graphObjectMap = [
-        'from' => '\Facebook\GraphNodes\GraphUser',
+        'from'        => '\Facebook\GraphNodes\GraphUser',
         'application' => '\Facebook\GraphNodes\GraphApplication',
     ];
 
@@ -104,7 +101,7 @@ class GraphAchievement extends GraphNode
     /**
      * Indicates whether gaining the achievement published a feed story for the user.
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function isNoFeedStory()
     {

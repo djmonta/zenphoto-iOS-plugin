@@ -19,14 +19,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Http;
 
 /**
- * Class GraphRawResponse
- *
- * @package Facebook
+ * Class GraphRawResponse.
  */
 class GraphRawResponse
 {
@@ -55,7 +53,7 @@ class GraphRawResponse
     public function __construct($headers, $body, $httpStatusCode = null)
     {
         if (is_numeric($httpStatusCode)) {
-            $this->httpResponseCode = (int)$httpStatusCode;
+            $this->httpResponseCode = (int) $httpStatusCode;
         }
 
         if (is_array($headers)) {
@@ -105,7 +103,7 @@ class GraphRawResponse
     public function setHttpResponseCodeFromHeader($rawResponseHeader)
     {
         preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $rawResponseHeader, $match);
-        $this->httpResponseCode = (int)$match[1];
+        $this->httpResponseCode = (int) $match[1];
     }
 
     /**

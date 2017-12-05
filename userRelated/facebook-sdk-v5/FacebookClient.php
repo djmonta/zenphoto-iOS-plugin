@@ -19,19 +19,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook;
 
-use Facebook\HttpClients\FacebookHttpClientInterface;
-use Facebook\HttpClients\FacebookCurlHttpClient;
-use Facebook\HttpClients\FacebookStreamHttpClient;
 use Facebook\Exceptions\FacebookSDKException;
+use Facebook\HttpClients\FacebookCurlHttpClient;
+use Facebook\HttpClients\FacebookHttpClientInterface;
+use Facebook\HttpClients\FacebookStreamHttpClient;
 
 /**
- * Class FacebookClient
- *
- * @package Facebook
+ * Class FacebookClient.
  */
 class FacebookClient
 {
@@ -89,7 +87,7 @@ class FacebookClient
      * Instantiates a new FacebookClient object.
      *
      * @param FacebookHttpClientInterface|null $httpClientHandler
-     * @param boolean                          $enableBeta
+     * @param bool                             $enableBeta
      */
     public function __construct(FacebookHttpClientInterface $httpClientHandler = null, $enableBeta = false)
     {
@@ -130,7 +128,7 @@ class FacebookClient
     /**
      * Toggle beta mode.
      *
-     * @param boolean $betaMode
+     * @param bool $betaMode
      */
     public function enableBetaMode($betaMode = true)
     {
@@ -140,7 +138,7 @@ class FacebookClient
     /**
      * Returns the base Graph URL.
      *
-     * @param boolean $postToVideoUrl Post to the video API if videos are being uploaded.
+     * @param bool $postToVideoUrl Post to the video API if videos are being uploaded.
      *
      * @return string
      */
@@ -163,13 +161,13 @@ class FacebookClient
     public function prepareRequestMessage(FacebookRequest $request)
     {
         $postToVideoUrl = $request->containsVideoUploads();
-        $url = $this->getBaseGraphUrl($postToVideoUrl) . $request->getUrl();
+        $url = $this->getBaseGraphUrl($postToVideoUrl).$request->getUrl();
 
         // If we're sending files they should be sent as multipart/form-data
         if ($request->containsFileUploads()) {
             $requestBody = $request->getMultipartBody();
             $request->setHeaders([
-                'Content-Type' => 'multipart/form-data; boundary=' . $requestBody->getBoundary(),
+                'Content-Type' => 'multipart/form-data; boundary='.$requestBody->getBoundary(),
             ]);
         } else {
             $requestBody = $request->getUrlEncodedBody();
@@ -191,9 +189,9 @@ class FacebookClient
      *
      * @param FacebookRequest $request
      *
-     * @return FacebookResponse
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookResponse
      */
     public function sendRequest(FacebookRequest $request)
     {
@@ -236,9 +234,9 @@ class FacebookClient
      *
      * @param FacebookBatchRequest $request
      *
-     * @return FacebookBatchResponse
-     *
      * @throws FacebookSDKException
+     *
+     * @return FacebookBatchResponse
      */
     public function sendBatchRequest(FacebookBatchRequest $request)
     {

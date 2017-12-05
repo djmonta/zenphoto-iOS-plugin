@@ -19,16 +19,14 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
- *
  */
+
 namespace Facebook\Exceptions;
 
 use Facebook\FacebookResponse;
 
 /**
- * Class FacebookResponseException
- *
- * @package Facebook
+ * Class FacebookResponseException.
  */
 class FacebookResponseException extends FacebookSDKException
 {
@@ -147,7 +145,7 @@ class FacebookResponseException extends FacebookSDKException
     }
 
     /**
-     * Returns the HTTP status code
+     * Returns the HTTP status code.
      *
      * @return int
      */
@@ -157,7 +155,7 @@ class FacebookResponseException extends FacebookSDKException
     }
 
     /**
-     * Returns the sub-error code
+     * Returns the sub-error code.
      *
      * @return int
      */
@@ -167,7 +165,7 @@ class FacebookResponseException extends FacebookSDKException
     }
 
     /**
-     * Returns the error type
+     * Returns the error type.
      *
      * @return string
      */
